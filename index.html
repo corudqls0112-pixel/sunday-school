@@ -42,6 +42,12 @@
 </head>
 <body>
 
+<!-- BGM -->
+<audio id="bgm" loop>
+  <source src="spy-mission.mp3" type="audio/mpeg">
+</audio>
+
+<button onclick="startMission()">▶ 미션 시작</button>
 <h1>🔐 Operation: WORD-LIGHT</h1>
 <p>성경을 직접 찾아야만 다음 방으로 갈 수 있다.</p>
 
@@ -64,7 +70,7 @@
   <h2>ROOM 2 – 말씀을 찾는 방법</h2>
   <p>📖 누가복음 11장 9절</p>
   <p>말씀 속 행동 3가지를 순서대로 입력하라<br>(쉼표로 구분)</p>
-  <input type="text" id="answer2" placeholder="예: 구하라,찾으라,두드리라">
+  <input type="text" id="answer2" placeholder="예:A,B,C ">
   <br>
   <button onclick="check2()">확인</button>
 </div>
@@ -87,7 +93,7 @@
     주의 말씀은 내 발에 (      )요<br>
     내 길에 (      )이다
   </p>
-  <input type="text" id="answer4" placeholder="예: 등,빛">
+  <input type="text" id="answer4" placeholder="예: A,B">
   <br>
   <button onclick="check4()">확인</button>
 </div>
