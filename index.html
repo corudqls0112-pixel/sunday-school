@@ -1,150 +1,192 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>Operation WORD-LIGHT</title>
-  <style>
-    body {
-      font-family: "맑은 고딕", sans-serif;
-      background-color: #111;
-      color: #eee;
-      text-align: center;
-      padding: 40px;
-    }
-    .room {
-      display: none;
-      border: 2px solid #555;
-      padding: 30px;
-      margin: 20px auto;
-      max-width: 600px;
-      background-color: #1c1c1c;
-    }
-    input {
-      padding: 8px;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-    button {
-      padding: 10px 20px;
-      margin-top: 15px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .active {
-      display: block;
-    }
-    .hint {
-      color: #aaa;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Operation WORD-LIGHT</title>
+
+<style>
+body {
+  font-family: "맑은 고딕", sans-serif;
+  background-color: #111;
+  color: #eee;
+  text-align: center;
+  padding: 40px;
+}
+
+.room {
+  display: none;
+  border: 2px solid #555;
+  padding: 30px;
+  margin: 20px auto;
+  max-width: 600px;
+  background-color: #1c1c1c;
+  animation: fadeIn 1.2s;
+}
+
+.active {
+  display: block;
+}
+
+input, button {
+  padding: 10px;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.hint {
+  font-size: 14px;
+  color: #aaa;
+}
+
+#ending {
+  display: none;
+  animation: fadeIn 2s;
+}
+
+#names {
+  margin-top: 20px;
+  font-size: 20px;
+  line-height: 1.8;
+  color: #ffd700;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+</style>
 </head>
+
 <body>
 
-<!-- BGM -->
+<h1>🔐 Operation: WORD-LIGHT</h1>
+<p>성경을 직접 찾아야만 다음 방으로 갈 수 있다</p>
+
+<!-- AUDIO -->
 <audio id="bgm" loop>
   <source src="spy-mission.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="door">
+  <source src="door-open.mp3" type="audio/mpeg">
+</audio>
+
+<audio id="successSound">
+  <source src="success.mp3" type="audio/mpeg">
+</audio>
+
 <button onclick="startMission()">▶ 미션 시작</button>
-<h1>🔐 Operation: WORD-LIGHT</h1>
-<p>성경을 직접 찾아야만 다음 방으로 갈 수 있다.</p>
 
 <!-- ROOM 1 -->
 <div class="room active" id="room1">
-  <h2>ROOM 1 – 빛의 시작</h2>
-  <p>📖 요한복음 1장 5절</p>
-  <p>
-    "빛이 어둠에 비치되<br>
-    어둠이 그것을 (        ) 못하더라"
-  </p>
-  <input type="text" id="answer1" placeholder="정답 입력">
-  <br>
-  <button onclick="check1()">확인</button>
-  <p class="hint">힌트: 성경 그대로 입력</p>
+<h2>ROOM 1 – 빛의 시작</h2>
+<p>요한복음 1장 5절</p>
+<p>어둠이 그것을 (        ) 못하더라</p>
+<input id="answer1">
+<br><button onclick="check1()">확인</button>
 </div>
 
 <!-- ROOM 2 -->
 <div class="room" id="room2">
-  <h2>ROOM 2 – 말씀을 찾는 방법</h2>
-  <p>📖 누가복음 11장 9절</p>
-  <p>말씀 속 행동 3가지를 순서대로 입력하라<br>(쉼표로 구분)</p>
-  <input type="text" id="answer2" placeholder="예:A,B,C ">
-  <br>
-  <button onclick="check2()">확인</button>
+<h2>ROOM 2 – 말씀을 찾는 방법</h2>
+<p>누가복음 11장 9절</p>
+<p>행동 3가지를 순서대로</p>
+<input id="answer2">
+<br><button onclick="check2()">확인</button>
 </div>
 
 <!-- ROOM 3 -->
 <div class="room" id="room3">
-  <h2>ROOM 3 – 반복의 힘</h2>
-  <p>📖 여호수아 1장 8절</p>
-  <p>말씀을 대하는 태도 중 반복되는 핵심 단어는?</p>
-  <input type="text" id="answer3" placeholder="한 단어">
-  <br>
-  <button onclick="check3()">확인</button>
+<h2>ROOM 3 – 반복의 힘</h2>
+<p>여호수아 1장 8절</p>
+<input id="answer3">
+<br><button onclick="check3()">확인</button>
 </div>
 
 <!-- ROOM 4 -->
 <div class="room" id="room4">
-  <h2>FINAL ROOM – 말씀의 빛</h2>
-  <p>📖 시편 119편 105절</p>
-  <p>
-    주의 말씀은 내 발에 (      )요<br>
-    내 길에 (      )이다
-  </p>
-  <input type="text" id="answer4" placeholder="예: A,B">
-  <br>
-  <button onclick="check4()">확인</button>
+<h2>FINAL ROOM – 말씀의 빛</h2>
+<p>시편 119편 105절</p>
+<input id="answer4" placeholder="예: 등,빛">
+<br><button onclick="check4()">확인</button>
 </div>
 
-<!-- SUCCESS -->
-<div class="room" id="success">
-  <h2>🎉 미션 성공!</h2>
-  <p>
-    하나님의 말씀은<br>
-    우리 삶의 길을 비추는 빛입니다.
-  </p>
-  <h3>시편 119편 105절</h3>
+<!-- ENDING -->
+<div id="ending">
+<h1>🎉 미션 성공</h1>
+<p>말씀의 빛이 문을 열었습니다</p>
+<h3>🕯 시편 119편 105절</h3>
+<p id="typing"></p>
+
+<h2>🏅 참여한 요원</h2>
+<div id="names"></div>
 </div>
 
 <script>
-  function check1() {
-    if (document.getElementById("answer1").value.trim() === "깨닫지") {
-      goNext("room1", "room2");
-    } else {
-      alert("성경을 다시 확인해보자!");
-    }
-  }
+// 🔹 아이들 이름 여기만 바꾸면 됨
+const kids = ["하진","예지","서진"];
 
-  function check2() {
-    if (document.getElementById("answer2").value.trim() === "구하라,찾으라,두드리라") {
-      goNext("room2", "room3");
-    } else {
-      alert("순서가 중요해!");
-    }
-  }
+function startMission() {
+  document.getElementById("bgm").play();
+}
 
-  function check3() {
-    if (document.getElementById("answer3").value.trim() === "묵상") {
-      goNext("room3", "room4");
-    } else {
-      alert("본문에서 반복되는 표현을 찾아보자!");
-    }
-  }
+function goNext(now, next) {
+  document.getElementById(now).classList.remove("active");
+  document.getElementById(next).classList.add("active");
+}
 
-  function check4() {
-    if (document.getElementById("answer4").value.trim() === "등,빛") {
-      goNext("room4", "success");
-    } else {
-      alert("말씀을 정확히 읽어보자!");
-    }
-  }
+function check1() {
+  if (answer1.value.trim() === "깨닫지") goNext("room1","room2");
+  else alert("말씀을 다시 확인!");
+}
 
-  function goNext(current, next) {
-    document.getElementById(current).classList.remove("active");
-    document.getElementById(next).classList.add("active");
-  }
+function check2() {
+  if (answer2.value.trim() === "구하라,찾으라,두드리라") goNext("room2","room3");
+  else alert("순서 중요!");
+}
+
+function check3() {
+  if (answer3.value.trim() === "묵상") goNext("room3","room4");
+  else alert("반복되는 단어!");
+}
+
+function check4() {
+  if (answer4.value.trim() === "등,빛") finish();
+  else alert("정확히!");
+}
+
+function finish() {
+  document.getElementById("room4").style.display="none";
+  document.getElementById("door").play();
+
+  setTimeout(()=>{
+    document.getElementById("successSound").play();
+    document.getElementById("ending").style.display="block";
+    typeText();
+    showNames();
+  },1500);
+}
+
+function typeText() {
+  const text = "주의 말씀은 내 발에 등이요 내 길에 빛입니다";
+  let i=0;
+  const typing = document.getElementById("typing");
+
+  const interval = setInterval(()=>{
+    typing.innerHTML += text.charAt(i);
+    i++;
+    if(i >= text.length) clearInterval(interval);
+  },80);
+}
+
+function showNames() {
+  const box = document.getElementById("names");
+  kids.forEach((name,i)=>{
+    setTimeout(()=>{
+      box.innerHTML += "✨ " + name + "<br>";
+    }, i*400);
+  });
+}
 </script>
 
 </body>
